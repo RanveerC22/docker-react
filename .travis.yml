@@ -7,3 +7,19 @@ before_install:
 
 script: 
     - docker run docker-react npm run test -- --coverage
+
+deploy:
+    provider: elasticbeanstalk
+    region: "eu-north-1"
+    app: "docker-react"
+    env: "Docker-react-env-1"
+    bucket_name: "elasticbeanstalk-eu-north-1-730335595025" #travis is going to copy all the file present in repo, zip them up and paste in the s3 bucket. Once pasted then CI says "Hey I used uploaded a new file use that up to redeploy the application"
+    bucket_path: "docker-react"
+    on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+
+
+    
